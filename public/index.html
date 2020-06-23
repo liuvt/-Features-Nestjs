@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- https://pushnotification-1a2bc.web.app/ -->
+<style>
+    body {
+        margin: 0;
+    }
+
+    .header {
+
+        padding: 0.07px;
+        text-align: center;
+    }
+
+    .contents {
+        background-color: #f1f1f1;
+        padding: 20px;
+        text-align: left;
+    }
+</style>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="icon.png">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="header">
+        <h3>Firebase Cloud Messaging</h3>
+    </div>
+    <div>
+        <input onclick="getPermistion()" type="submit" value="Get Permission">
+    </div>
+    <div class="contents">
+        <a>Token: </a><br><a id="demo"></a>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-messaging.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyC3snN-ginnoX5KmXwtKKNw1Qwsb0rn6q8",
+            authDomain: "pushnotification-1a2bc.firebaseapp.com",
+            databaseURL: "https://pushnotification-1a2bc.firebaseio.com",
+            projectId: "pushnotification-1a2bc",
+            storageBucket: "pushnotification-1a2bc.appspot.com",
+            messagingSenderId: "317074961759",
+            appId: "1:317074961759:web:6093f6cc566d6224a332ea",
+            measurementId: "G-TYY20MF1SQ"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const messaging = firebase.messaging();
+
+        function isTokenSentToServer() {
+            return window.localStorage.getItem('sentToServer') === '1';
+        }
+
+        function setTokenSentToServer(sent) {
+            window.localStorage.setItem('sentToServer', sent ? '1' : '0');
+        }
+
+        function sendTokenToServer(currentToken) {
+            if (!isTokenSentToServer()) {
+                console.log('Sending token to server...');
+                setTokenSentToServer(true);
+            } else {
+                console.log('Token already sent to server so won\'t send it again ' +
+                    'unless it changes');
+            }
+        }
+
+        function tokenGet() {
+            messaging.getToken().then((currentToken) => {
+                if (currentToken) {
+                    document.getElementById("demo").innerHTML = currentToken;
+                    sendTokenToServer(currentToken);
+                } else {
+                    console.log('No Instance ID token available. Request permission to generate one.');
+                    setTokenSentToServer(false);
+                }
+            }).catch((err) => {
+                console.log('An error occurred while retrieving token. ', err);
+                setTokenSentToServer(false);
+            });
+        }
+        function getPermistion() {
+            messaging.requestPermission()
+                .then(function () {
+                    console.log('Permission allow!');
+                    tokenGet();
+                })
+                .catch(function (err) {
+                    console.log('Missing permission!', err)
+                })
+        }
+
+        messaging.onMessage((payload) => {
+            console.log('Message received: ', payload);
+        });
+
+    </script>
+</body>
+
+</html>
