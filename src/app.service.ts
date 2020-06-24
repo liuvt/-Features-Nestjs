@@ -3,8 +3,8 @@ import { Injectable } from '@nestjs/common';
 @Injectable()
 export class AppService {
 
-    async jestUnitTest(): Promise<number>{
-        return 10 + 3;
+    async jestUnitTest(a: number): Promise<number>{
+        return a - 1;
     }
 }
 
