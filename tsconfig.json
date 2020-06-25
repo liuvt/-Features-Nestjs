@@ -6,11 +6,10 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "target": "es2017",
-    "sourceMap": true,
+    "sourceMap": false,
+    "incremental": true,
     "outDir": "./dist",
     "baseUrl": "./",
-    "incremental": true,
     "resolveJsonModule": true
-  },
-  "exclude": ["node_modules", "dist"]
+  }
 }

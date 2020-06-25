@@ -2,7 +2,7 @@ import {
     Controller, Get, Post, Body, Delete, Param, Patch,
 } from '@nestjs/common';
 import { CachesService } from './caches.service';
-import { CrudMongoDto } from './payload/caches.payload';
+import { CrudMongoDto } from './payload';
 import { Cacheable, ObjectCache, Apply } from './decorator';
 
 @ObjectCache('cache_key')

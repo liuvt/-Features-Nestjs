@@ -8,12 +8,16 @@ import { AppService } from "./app.service";
 
 @Module({
        imports: [
-              MongooseModule.forRoot('mongodb://localhost:27017/dbTest', { useFindAndModify: false, useNewUrlParser: true, useUnifiedTopology: true }),
-              CachesModule,
-              //NotificeModule,
-              CrawlerModule
+           MongooseModule.forRoot('mongodb://localhost:27017/dbTest', { useFindAndModify: false, useNewUrlParser: true, useUnifiedTopology: true }),
+           CachesModule,
+           //NotificeModule,
+           CrawlerModule
        ],
-       controllers: [AppController],
-       providers: [AppService],
+       controllers: [
+           AppController
+       ],
+       providers: [
+           AppService
+       ],
 })
 export class AppModule { }
