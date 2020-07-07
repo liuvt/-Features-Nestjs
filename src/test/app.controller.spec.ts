@@ -17,7 +17,8 @@ describe('@Nestjs/Testing with Jest', () => {
 
        it('Successful: return value greater than 0', async (done) => {
 
-           itAfter = await appController.jestUnitTest(2);
+           itAfter = await appController.jestUnitTest(1.5);
+
            expect(itAfter).toBeGreaterThan(expected);
            done();
        });
@@ -25,10 +26,15 @@ describe('@Nestjs/Testing with Jest', () => {
        it('Failed: return value less then or equal 0', async (done) => {
 
           itAfter = await appController.jestUnitTest(-1);
-
           expect(itAfter).toBeLessThanOrEqual(expected);
           done();
        });
+       it('Failed: return value less then or equal 0', async (done) => {
+
+        itAfter = await appController.jestUnitTest(null);
+        expect(itAfter).not.toBeNull();
+        done();
+     });
 
     })
 });
