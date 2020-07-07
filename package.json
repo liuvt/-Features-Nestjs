@@ -17,10 +17,12 @@
   "dependencies": {
     "@nestjs/common": "^6.11.11",
     "@nestjs/core": "^6.10.14",
+    "@nestjs/microservices": "^7.3.1",
     "@nestjs/mongoose": "^6.4.0",
     "@nestjs/platform-fastify": "^7.0.6",
     "cache-manager": "^3.3.0",
     "cache-manager-redis-store": "^2.0.0",
+    "class-transformer": "^0.2.3",
     "class-validator": "^0.12.2",
     "crawler": "^1.2.1",
     "fastify-static": "^2.7.0",

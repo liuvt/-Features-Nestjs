@@ -2,8 +2,9 @@ import {
     Controller, Get, Post, Body, Delete, Param, Patch,
 } from '@nestjs/common';
 import { CachesService } from './caches.service';
-import { CrudMongoDto } from './payload';
+import { CrudPayload } from './payload';
 import { Cacheable, ObjectCache, Apply } from './decorator';
+import { CachesInterface } from './interface';
 
 @ObjectCache('cache_key')
 @Controller('demo-cache')
@@ -17,12 +18,12 @@ export class CachesController {
     }
 
     @Get('cacheexists')
-    async exists() {
+    async exists(){
         return this.service.exists();
     }
 
     @Post('cachepush')
-    async add(@Body() dto: CrudMongoDto) {
+    async add(@Body() dto: CrudPayload): Promise<CachesInterface> {
         return this.service.add(dto);
     }
 
@@ -32,13 +33,13 @@ export class CachesController {
     }
 
     @Patch('cacheedit/:id')
-    async update(@Param('id') id: string, @Body() dto: CrudMongoDto) {
+    async update(@Param('id') id: string, @Body() dto: CrudPayload): Promise<CachesInterface> {
         return this.service.up(id, dto);
     }
 
     @Apply('cacheable')
     //@Get('cacheable')
-    async get() {
+    async get(): Promise<CachesInterface[]> {
         return this.service.get();
     }
 

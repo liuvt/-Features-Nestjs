@@ -15,7 +15,12 @@ import { DecoratorModule } from './decorator/decorator.module';
             ttl: 600
         }),
         DecoratorModule,
-        MongooseModule.forFeature([{ name: 'CrudMongo', schema: CachesSchema }]),
+        MongooseModule.forFeature([
+            {
+                name: 'TextCaches',
+                schema: CachesSchema,
+            },
+        ]),
     ],
     controllers: [CachesController],
     providers: [CachesService],

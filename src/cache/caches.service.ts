@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CachesInterface } from './interface';
-import { CrudMongoDto } from './payload';
+import { CrudPayload } from './payload';
 import { CacheExist, Cacheable, CachePush, CacheDelete, CacheInvalidate, ObjectCache, CacheUpdate, } from './decorator';
 import { methodDecorator } from './decorator';
 
@@ -11,7 +11,7 @@ import { methodDecorator } from './decorator';
 @ObjectCache('cache_key')
 export class CachesService {
 
-    constructor(@InjectModel('CrudMongo') private model: Model<CachesInterface>) {
+    constructor(@InjectModel('TextCaches') private model: Model<CachesInterface>) {
     }
 
     @CacheExist()
@@ -31,7 +31,7 @@ export class CachesService {
     }
 
     @CachePush()
-    async add(dto: CrudMongoDto): Promise<CachesInterface> {
+    async add(dto: CrudPayload): Promise<CachesInterface> {
         return this.model.create(dto);
     }
 
@@ -41,7 +41,7 @@ export class CachesService {
     }
 
     @CacheUpdate()
-    async up(id: string, dto: CrudMongoDto): Promise<CachesInterface> {
+    async up(id: string, dto: CrudPayload): Promise<CachesInterface> {
         return this.model.findOneAndUpdate({ _id: id }, dto);
     }
 

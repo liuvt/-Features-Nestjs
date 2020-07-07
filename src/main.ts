@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFastifyApplication, FastifyAdapter } from '@nestjs/platform-fastify'
+import {RpcException} from '@nestjs/microservices';
 import { AppModule } from './app.module';
 import { join } from 'path';
 
@@ -12,6 +13,16 @@ async function bootstrap() {
     new FastifyAdapter(),
   );
 
+  app.useGlobalPipes(
+    new ValidationPipe({
+      forbidUnknownValues: true,
+      exceptionFactory: (errors) => {
+        const [error] = errors;
+        throw new RpcException(Object.values(error.constraints)[0]);
+    },
+    }),
+  );
+  
   app.useStaticAssets({
     root: join(__dirname, '..', 'public'),
     prefix: '/public/',
