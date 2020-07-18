@@ -1,7 +1,7 @@
 import { extname } from 'path';
 import * as Url from 'url';
 
-export const emp = '';
+export const emp = null;
 export const detailOgc = (_sitename, _title, _description, _url, _type) => {
     return {
         sitename: _sitename || emp,
@@ -23,7 +23,7 @@ export const mediaOgc = (_url, _width, _height, _type) => {
 
 export const etExtensionUrl = (urlImg) => {
     try {
-        return (extname(Url.parse(urlImg).pathname).replace('.', emp));
+        return (extname(Url.parse(urlImg).pathname).replace('.', ''));
     } catch (e) {
         return emp;
     }
@@ -33,3 +33,19 @@ export const isExisthttp = (url: string) => {
     const reUrl = url.replace('http://', '')
     return (reUrl.search('https://') === -1) ? 'https://' + reUrl : reUrl
 }
+
+export const resultCrawler = (url) => {
+    return {
+        sitename: null,
+        title: null,
+        description: null,
+        url,
+        type: null,
+        image: {
+            url: null,
+            width: null,
+            height: null,
+            type: null,
+        },
+    };
+};
